@@ -46,9 +46,15 @@
         }
     </style>
 </head>
-<body style="background: url('https://img.freepik.com/premium-photo/summer-ocean_739536-4193.jpg') no-repeat center center fixed; background-size: cover; filter: brightness(0.9);">
+<body style="background: url('beach.jpg') no-repeat center center fixed; background-size: cover; filter: brightness(0.9);"></body>
     <div class="container mt-5" id="config-page">
         <h1 class="text-center" style="color: #003366;">Card Drawing Game</h1>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <button id="bikes-btn" class="btn btn-outline-primary me-2"><strong>Bikes</strong></button>
+                <button id="challenges-btn" class="btn btn-outline-primary"><strong>Challenges</strong></button>
+            </div>
+        </div>
         <div class="row mt-4">
             <div class="col-12">
                 <div id="card-list" class="row">
@@ -83,7 +89,7 @@
     </div>
 
     <script>
-        const cards = [
+        const cards_bike = [
             { id: 1, name: "Tandem 1: Vooraan", included: true },
             { id: 2, name: "Tandem 1: Achteraan", included: true },
             { id: 3, name: "Tandem 2: Vooraan", included: true },
@@ -93,6 +99,52 @@
             { id: 7, name: "Fiets Jonas", included: true },
             { id: 8, name: "Fiets Rob", included: true },
         ];
+
+        const cards_challenges = [
+            { id: 9, name: "Challenge 1: Blindfold Rear Rider", included: true },
+            { id: 10, name: "Challenge 2: Only One Pedals", included: true },
+            { id: 11, name: "Challenge 3: Switch Bikes Freely", included: true },
+            { id: 12, name: "Challenge 4: Use Only Top Gear", included: true },
+            { id: 13, name: "Challenge 5: Use Only Lowest Gear", included: true },
+            { id: 14, name: "Challenge 6: Placeholder Challenge", included: true },
+            { id: 15, name: "Challenge 7: Placeholder Challenge", included: true },
+            { id: 16, name: "Challenge 8: Placeholder Challenge", included: true },
+        ];
+
+        // Function to switch between bikes and challenges
+        function loadCards(type) {
+            if (type === "bikes") {
+            cards = cards_bike;
+            highlightButton("bikes-btn");
+            } else if (type === "challenges") {
+            cards = cards_challenges;
+            highlightButton("challenges-btn");
+            }
+            renderCards();
+        }
+
+        // Function to highlight the active button
+        function highlightButton(activeButtonId) {
+            const buttons = ["bikes-btn", "challenges-btn"];
+            buttons.forEach(buttonId => {
+            const button = document.getElementById(buttonId);
+            if (buttonId === activeButtonId) {
+                button.classList.add("btn-primary");
+                button.classList.remove("btn-outline-primary");
+            } else {
+                button.classList.add("btn-outline-primary");
+                button.classList.remove("btn-primary");
+            }
+            });
+        }
+
+        // Event listeners for the buttons
+        document.getElementById("bikes-btn").addEventListener("click", () => loadCards("bikes"));
+        document.getElementById("challenges-btn").addEventListener("click", () => loadCards("challenges"));
+
+        // Default to bikes
+        let cards = cards_bike;
+        highlightButton("bikes-btn");
 
         let gameCards = [];
 
